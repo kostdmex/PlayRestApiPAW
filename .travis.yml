@@ -1,0 +1,7 @@
+language: java
+install: true
+jdk:
+  - openjdk10
+branches:
+  only:
+    - master
