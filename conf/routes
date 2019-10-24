@@ -1,0 +1,5 @@
+
+GET         /person               controllers.PersonController.getPersons
+GET         /person/:email        controllers.PersonController.getPerson(email:String)
+POST        /person               controllers.PersonController.addPerson
+PUT         /person/:email        controllers.PersonController.editPerson(email:String)
