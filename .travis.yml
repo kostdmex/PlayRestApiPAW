@@ -7,9 +7,10 @@ scala:
 branches:
   only:
     - master
+    - production
 deploy:
   provider: heroku
   api_key:
     secure: $API_KEY
   app: play-rest-api-paw
-  skip_cleanup: true
+  on: production
