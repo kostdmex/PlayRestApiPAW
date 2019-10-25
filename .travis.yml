@@ -7,5 +7,3 @@ scala:
 branches:
   only:
     - master
-script:
-   - sbt scripted
