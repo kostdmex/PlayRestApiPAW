@@ -2,7 +2,7 @@ package controllers;
 
 import converters.BoardToBoardJson;
 import json.BoardJson;
-import model.Board;
+import models.Board;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -24,9 +24,9 @@ public class BoardController extends Controller {
 
     }
 
-    public Result findAll() {
+    public Result findAllTeamBoards(Integer id) {
 
-        return ok(Json.toJson(Board.findAll().stream().map(boardToBoardJson).collect(Collectors.toList())));
+        return ok(Json.toJson(Board.findAllTeamBoards(id).stream().map(boardToBoardJson).collect(Collectors.toList())));
 
     }
 

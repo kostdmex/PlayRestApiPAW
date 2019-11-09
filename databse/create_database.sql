@@ -14,7 +14,7 @@ create table board(
 	id int(10) unsigned not null auto_increment,
     name text not null,
     team_id int(10) unsigned,
-    backgroung longblob,
+    background longblob,
     primary key (id),
     CONSTRAINT id_team foreign key (team_id) references team (id) ON UPDATE NO ACTION ON DELETE NO ACTION);
     

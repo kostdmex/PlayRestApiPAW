@@ -1,7 +1,7 @@
 package converters;
 
 import json.BoardJson;
-import model.Board;
+import models.Board;
 
 import javax.inject.Singleton;
 import java.util.function.Function;

@@ -1,4 +1,4 @@
-package model;
+package models;
 
 import io.ebean.Finder;
 import io.ebean.Model;
@@ -19,16 +19,14 @@ public class Board extends Model {
     public Integer id;
     public String name;
     public Integer team_id;
-    public Integer background;
+    public String background;
 
     public static Board findById(Integer id) {
         return FINDER.ref(id);
     }
 
-    public static List<Board> findAll() {
-        return FINDER.query().findList();
+    public static List<Board> findAllTeamBoards(Integer team_id) {
+        return FINDER.query().where().eq("team_id", team_id).findList();
     }
-
-
 
 }
