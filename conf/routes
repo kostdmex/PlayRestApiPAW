@@ -2,3 +2,4 @@
 GET         /board/all/:id controllers.BoardController.findAllTeamBoards(id:Integer)
 #POST        /board controllers.BoardController.save
 GET         /board/:id  controllers.BoardController.findById(id:Integer)
+GET         /list/:id controllers.ListController.findByBoardId(id:Integer)
