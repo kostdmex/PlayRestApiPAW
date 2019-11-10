@@ -1,7 +1,8 @@
 package controllers;
 
-import json.BoardJson;
-import json.BoardJsonPost;
+import json.board.BoardJson;
+import json.board.BoardJsonPost;
+import json.board.BoardJsonPut;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -44,7 +45,17 @@ public class BoardController extends Controller {
             return badRequest();
         }
 
-        return ok().withHeader("Location", String.valueOf(boardId));
+        return created().withHeader("Location", String.valueOf(boardId));
+    }
+
+    public Result updateBoard(Integer boardId) {
+
+        BoardJsonPut boardJsonPut = Json.fromJson(request().body().asJson(), BoardJsonPut.class);
+        boolean succes = boardService.updateBoard(boardId, boardJsonPut);
+        if(!succes)
+            return notFound();
+
+        return created();
     }
 
 }

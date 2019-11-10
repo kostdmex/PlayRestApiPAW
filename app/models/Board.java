@@ -22,4 +22,12 @@ public class Board extends Model {
         this.team_id = team_id;
         this.background = background;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setBackground(String background) {
+        this.background = background;
+    }
 }

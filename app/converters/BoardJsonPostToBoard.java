@@ -1,6 +1,6 @@
 package converters;
 
-import json.BoardJsonPost;
+import json.board.BoardJsonPost;
 import models.Board;
 
 import javax.inject.Singleton;
