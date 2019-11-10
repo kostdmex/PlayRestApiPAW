@@ -68,10 +68,22 @@ create table list (
   constraint pk_list primary key (id)
 );
 
+create table team (
+  id                            integer auto_increment not null,
+  name                          varchar(255),
+  name_short                    varchar(255),
+  description                   varchar(255),
+  site                          varchar(255),
+  logo                          varchar(255),
+  constraint pk_team primary key (id)
+);
+
 
 # --- !Downs
 
 drop table if exists board;
 
 drop table if exists list;
+
+drop table if exists team;
 
