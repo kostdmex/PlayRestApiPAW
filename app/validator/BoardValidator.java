@@ -1,6 +1,7 @@
 package validator;
 
-import json.BoardJsonPost;
+import json.board.BoardJsonPost;
+import repository.BoardFinder;
 
 import javax.inject.Singleton;
 
@@ -12,6 +13,10 @@ public class BoardValidator {
         if(boardJsonPost.getName() == null && boardJsonPost.getTeam_id() == null){
             return false;
         }else return TeamValidator.checkIfTeamExists(boardJsonPost.getTeam_id());
+    }
+
+    public static boolean checkIfBoardExists(Integer boardId){
+        return BoardFinder.findById(boardId) != null;
     }
 
 }

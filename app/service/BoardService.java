@@ -2,8 +2,9 @@ package service;
 
 import converters.BoardJsonPostToBoard;
 import converters.BoardToBoardJson;
-import json.BoardJson;
-import json.BoardJsonPost;
+import json.board.BoardJson;
+import json.board.BoardJsonPost;
+import json.board.BoardJsonPut;
 import models.Board;
 import repository.BoardFinder;
 import validator.BoardValidator;
@@ -47,6 +48,25 @@ public class BoardService {
         Board board = boardJsonPostToBoard.apply(boardJsonPost);
         board.save();
         return board.id;
+    }
+
+    public boolean updateBoard(Integer boardId, BoardJsonPut boardJsonPut){
+        if(!BoardValidator.checkIfBoardExists(boardId)){
+            return false;
+        }
+
+        Board boardToUpdate = BoardFinder.findById(boardId);
+        if(boardJsonPut.getName() != null){
+            boardToUpdate.setName(boardJsonPut.getName());
+        }
+
+        if(boardJsonPut.getBackground() != null){
+            boardToUpdate.setBackground(boardJsonPut.getBackground());
+        }
+
+        boardToUpdate.save();
+
+        return true;
     }
 
 }

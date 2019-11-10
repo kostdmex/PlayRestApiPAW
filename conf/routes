@@ -3,3 +3,4 @@ GET         /board/all/:id controllers.BoardController.findAllTeamBoards(id:Inte
 POST        /board controllers.BoardController.createBoard
 GET         /board/:id  controllers.BoardController.findById(id:Integer)
 GET         /list/:id controllers.ListController.findByBoardId(id:Integer)
+PUT         /board/:id controllers.BoardController.updateBoard(id:Integer)
