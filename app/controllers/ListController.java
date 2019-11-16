@@ -4,6 +4,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import json.list.ListJson;
+import json.list.ListJsonPost;
 import json.list.ListJsonPut;
 import play.libs.Json;
 import play.mvc.Controller;
@@ -29,8 +30,8 @@ public class ListController extends Controller {
     }
 
     public Result createList(){
-        Integer listId = listService.createList(Json.fromJson(request().body().asJson(), ListJson.class));
-        if(listId == -1){
+        Integer listId = listService.createList(Json.fromJson(request().body().asJson(), ListJsonPost.class));
+        if(listId == null){
             return badRequest("Given boardId not exists");
         }
 

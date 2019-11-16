@@ -60,6 +60,17 @@ create table board (
   constraint pk_board primary key (id)
 );
 
+create table card (
+  id                            integer auto_increment not null,
+  title                         varchar(255),
+  description                   varchar(255),
+  label_id                      integer,
+  number_on_list                integer,
+  add_date                      datetime(6),
+  list_id                       integer not null,
+  constraint pk_card primary key (id)
+);
+
 create table list (
   id                            integer auto_increment not null,
   name                          varchar(255),
@@ -78,16 +89,24 @@ create table team (
   constraint pk_team primary key (id)
 );
 
+create index ix_card_list_id on card (list_id);
+alter table card add constraint fk_card_list_id foreign key (list_id) references list (id) on delete restrict on update restrict;
+
 create index ix_list_board_id on list (board_id);
 alter table list add constraint fk_list_board_id foreign key (board_id) references board (id) on delete restrict on update restrict;
 
 
 # --- !Downs
 
+alter table card drop foreign key fk_card_list_id;
+drop index ix_card_list_id on card;
+
 alter table list drop foreign key fk_list_board_id;
 drop index ix_list_board_id on list;
 
 drop table if exists board;
+
+drop table if exists card;
 
 drop table if exists list;
 

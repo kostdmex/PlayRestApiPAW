@@ -6,3 +6,7 @@ GET         /list/:id controllers.ListController.findByBoardId(id:Integer)
 PUT         /board/:id controllers.BoardController.updateBoard(id:Integer)
 POST        /list controllers.ListController.createList
 PUT         /list/:id controllers.ListController.updateList(id:Integer)
+GET         /card/all/:id controllers.CardController.getCardsBtListId(id:Integer)
+GET         /card/:id controllers.CardController.getCardById(id:Integer)
+POST        /card controllers.CardController.createCard
+PUT         /card/:id controllers.CardController.updateCard(id:Integer)
