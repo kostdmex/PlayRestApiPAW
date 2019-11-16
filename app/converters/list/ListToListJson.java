@@ -1,6 +1,6 @@
-package converters;
+package converters.list;
 
-import json.ListJson;
+import json.list.ListJson;
 import models.List;
 
 import javax.inject.Singleton;
@@ -11,6 +11,6 @@ public class ListToListJson implements Function<List, ListJson> {
 
     @Override
     public ListJson apply(List list) {
-        return new ListJson(list.id, list.name, list.boardId, list.numberOnBoard);
+        return new ListJson(list.id, list.name, list.board.id, list.numberOnBoard);
     }
 }

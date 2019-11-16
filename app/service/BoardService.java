@@ -1,7 +1,7 @@
 package service;
 
-import converters.BoardJsonPostToBoard;
-import converters.BoardToBoardJson;
+import converters.board.BoardJsonPostToBoard;
+import converters.board.BoardToBoardJson;
 import json.board.BoardJson;
 import json.board.BoardJsonPost;
 import json.board.BoardJsonPut;

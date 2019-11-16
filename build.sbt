@@ -18,5 +18,9 @@ enablePlugins(DockerPlugin)
 libraryDependencies ++= Seq(
   "mysql" % "mysql-connector-java" % "8.0.18",
 )
+libraryDependencies ++= Seq(
+  javaJpa,
+  "org.hibernate" % "hibernate-core" % "5.4.2.Final"
+)
 libraryDependencies += "org.glassfish.jaxb" % "jaxb-core" % "2.3.0.1"
 libraryDependencies += "org.glassfish.jaxb" % "jaxb-runtime" % "2.3.2"

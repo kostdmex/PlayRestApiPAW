@@ -24,7 +24,6 @@ public class BoardController extends Controller {
             return notFound();
         }
         return ok(Json.toJson(boardJson));
-
     }
 
     public Result findAllTeamBoards(Integer teamId) {
@@ -37,7 +36,6 @@ public class BoardController extends Controller {
     }
 
     public Result createBoard() {
-
         BoardJsonPost boardJsonPost = Json.fromJson(request().body().asJson(), BoardJsonPost.class);
         Integer boardId = boardService.createBoard(boardJsonPost);
 
@@ -51,8 +49,8 @@ public class BoardController extends Controller {
     public Result updateBoard(Integer boardId) {
 
         BoardJsonPut boardJsonPut = Json.fromJson(request().body().asJson(), BoardJsonPut.class);
-        boolean succes = boardService.updateBoard(boardId, boardJsonPut);
-        if(!succes)
+        boolean success = boardService.updateBoard(boardId, boardJsonPut);
+        if(!success)
             return notFound();
 
         return created();

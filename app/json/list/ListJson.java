@@ -1,4 +1,4 @@
-package json;
+package json.list;
 
 public class ListJson {
 

@@ -14,4 +14,8 @@ public class ListFinder {
         return FINDER.query().where().eq("board_id", boardId).findList();
     }
 
+    public static List findListById(Integer listId){
+        return FINDER.query().where().eq("id", listId).findOne();
+    }
+
 }
