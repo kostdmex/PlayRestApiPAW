@@ -17,6 +17,10 @@ public class List extends Model{
     @JoinColumn(name = "board_id", nullable = false)
     public Board board;
 
+    @OneToMany(mappedBy = "list")
+    public java.util.List<Card> cards;
+
+
     public List(String name, Integer numberOnBoard, Board board) {
         this.name = name;
         this.numberOnBoard = numberOnBoard;
@@ -62,5 +66,13 @@ public class List extends Model{
 
     public void setBoard(Board board) {
         this.board = board;
+    }
+
+    public java.util.List<Card> getCards() {
+        return cards;
+    }
+
+    public void setCards(java.util.List<Card> cards) {
+        this.cards = cards;
     }
 }

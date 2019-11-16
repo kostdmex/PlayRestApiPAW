@@ -1,13 +1,13 @@
 package service;
 
-import converters.list.ListJsonToList;
+import converters.list.ListJsonPostToList;
 import converters.list.ListToListJson;
 
 import json.list.ListJson;
+import json.list.ListJsonPost;
 import json.list.ListJsonPut;
 import models.List;
 import repository.ListFinder;
-import validator.BoardValidator;
 import validator.ListValidator;
 
 import javax.inject.Inject;
@@ -21,7 +21,7 @@ public class ListService {
     private ListToListJson listToListJson;
 
     @Inject
-    private ListJsonToList listJsonToList;
+    private ListJsonPostToList listJsonPostToList;
 
     public java.util.List<ListJson>  findByBoardId(Integer boardId){
         java.util.List<List> listList = ListFinder.findAllListsByBoardId(boardId);
@@ -33,12 +33,12 @@ public class ListService {
         return listList.stream().map(listToListJson).collect(Collectors.toList());
     }
 
-    public Integer createList(ListJson listJson){
-        if(!BoardValidator.checkIfBoardExists(listJson.boardId)){
-            return  -1;
+    public Integer createList(ListJsonPost listJson){
+        if(!ListValidator.validateListPost(listJson)){
+            return  null;
         }
 
-        List list = listJsonToList.apply(listJson);
+        List list = listJsonPostToList.apply(listJson);
         list.save();
         return list.id;
     }
