@@ -63,8 +63,8 @@ create table board (
 create table list (
   id                            integer auto_increment not null,
   name                          varchar(255),
-  board_id                      integer,
   number_on_board               integer,
+  board_id                      integer not null,
   constraint pk_list primary key (id)
 );
 
@@ -78,8 +78,14 @@ create table team (
   constraint pk_team primary key (id)
 );
 
+create index ix_list_board_id on list (board_id);
+alter table list add constraint fk_list_board_id foreign key (board_id) references board (id) on delete restrict on update restrict;
+
 
 # --- !Downs
+
+alter table list drop foreign key fk_list_board_id;
+drop index ix_list_board_id on list;
 
 drop table if exists board;
 

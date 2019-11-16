@@ -1,4 +1,4 @@
-package converters;
+package converters.board;
 
 import json.board.BoardJsonPost;
 import models.Board;

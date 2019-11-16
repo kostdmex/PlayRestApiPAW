@@ -3,7 +3,8 @@ package controllers;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import json.ListJson;
+import json.list.ListJson;
+import json.list.ListJsonPut;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -25,5 +26,23 @@ public class ListController extends Controller {
         }
 
         return ok(Json.toJson(listJsons));
+    }
+
+    public Result createList(){
+        Integer listId = listService.createList(Json.fromJson(request().body().asJson(), ListJson.class));
+        if(listId == -1){
+            return badRequest("Given boardId not exists");
+        }
+
+        return created().withHeader("Location", String.valueOf(listId));
+    }
+
+    public Result updateList(Integer listId){
+        boolean success = listService.updateList(listId, Json.fromJson(request().body().asJson(), ListJsonPut.class));
+        if(!success){
+            return notFound();
+        }
+
+        return created();
     }
 }
