@@ -10,9 +10,11 @@ public class BoardValidator {
 
     public static boolean validateBoardPost(BoardJsonPost boardJsonPost){
 
-        if(boardJsonPost.getName() == null && boardJsonPost.getTeam_id() == null){
+        if(boardJsonPost.getName() == null){
             return false;
-        }else return TeamValidator.checkIfTeamExists(boardJsonPost.getTeam_id());
+        }else if (boardJsonPost.getTeam_id() != null) {
+            return TeamValidator.checkIfTeamExists(boardJsonPost.getTeam_id());
+        }else return true;
     }
 
     public static boolean checkIfBoardExists(Integer boardId){

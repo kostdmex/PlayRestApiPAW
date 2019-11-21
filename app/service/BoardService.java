@@ -6,7 +6,10 @@ import json.board.BoardJson;
 import json.board.BoardJsonPost;
 import json.board.BoardJsonPut;
 import models.Board;
+import models.User;
+import models.User_Board;
 import repository.BoardFinder;
+import repository.UserFinder;
 import validator.BoardValidator;
 
 import javax.inject.Inject;
@@ -23,8 +26,8 @@ public class BoardService {
     @Inject
     private BoardJsonPostToBoard boardJsonPostToBoard;
 
-    public BoardJson findByBoardId(Integer boardId){
-        Board board = BoardFinder.findById(boardId);
+    public BoardJson findByBoardId(Integer boardId, Integer userId){
+        Board board = BoardFinder.findByUserIdAndBoardId(userId, boardId);
         if(board == null){
             return null;
         }
@@ -40,22 +43,38 @@ public class BoardService {
         return boards.stream().map(boardToBoardJson).collect(Collectors.toList());
     }
 
-    public Integer createBoard(BoardJsonPost boardJsonPost){
+    public List<BoardJson> findAll(Integer userId){
+        List<Board> boards = BoardFinder.findByUserId(userId);
+        if(boards.size() == 0){
+            return null;
+        }
+
+        return boards.stream().map(boardToBoardJson).collect(Collectors.toList());
+    }
+
+    public Integer createBoard(BoardJsonPost boardJsonPost, Integer userId){
         if(!BoardValidator.validateBoardPost(boardJsonPost)){
             return null;
         }
 
         Board board = boardJsonPostToBoard.apply(boardJsonPost);
         board.save();
+        if(board.team_id == null){
+            User_Board user_board = new User_Board(userId, board.id);
+            user_board.save();
+        }else{
+            List<User> users = UserFinder.findByTeamId(board.team_id);
+            users.forEach(user -> new User_Board(user.getId(), board.id).save());
+        }
         return board.id;
     }
 
-    public boolean updateBoard(Integer boardId, BoardJsonPut boardJsonPut){
+    public boolean updateBoard(Integer boardId, BoardJsonPut boardJsonPut, Integer userId){
         if(!BoardValidator.checkIfBoardExists(boardId)){
             return false;
         }
 
-        Board boardToUpdate = BoardFinder.findById(boardId);
+        Board boardToUpdate = BoardFinder.findByUserIdAndBoardId(userId, boardId);
         if(boardJsonPut.getName() != null){
             boardToUpdate.setName(boardJsonPut.getName());
         }

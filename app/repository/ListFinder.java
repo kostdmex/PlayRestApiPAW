@@ -18,4 +18,7 @@ public class ListFinder {
         return FINDER.query().where().eq("id", listId).findOne();
     }
 
+    public static  List findByCardId (Integer cardId){
+        return FINDER.query().where().eq("cards.id", cardId).findOne();
+    }
 }

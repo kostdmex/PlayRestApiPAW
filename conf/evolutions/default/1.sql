@@ -89,6 +89,30 @@ create table team (
   constraint pk_team primary key (id)
 );
 
+create table user (
+  id                            integer auto_increment not null,
+  name                          varchar(255),
+  surname                       varchar(255),
+  nickname                      varchar(255),
+  password                      varchar(255),
+  email                         varchar(255),
+  constraint pk_user primary key (id)
+);
+
+create table user_board (
+  id                            integer auto_increment not null,
+  user_id                       integer,
+  board_id                      integer,
+  constraint pk_user_board primary key (id)
+);
+
+create table user_team (
+  id                            integer auto_increment not null,
+  user_id                       integer,
+  team_id                       integer,
+  constraint pk_user_team primary key (id)
+);
+
 create index ix_card_list_id on card (list_id);
 alter table card add constraint fk_card_list_id foreign key (list_id) references list (id) on delete restrict on update restrict;
 
@@ -111,4 +135,10 @@ drop table if exists card;
 drop table if exists list;
 
 drop table if exists team;
+
+drop table if exists user;
+
+drop table if exists user_board;
+
+drop table if exists user_team;
 
