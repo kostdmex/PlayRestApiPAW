@@ -18,6 +18,9 @@ public class Board extends Model {
     @OneToMany(mappedBy = "board")
     public List<models.List> lists;
 
+    @ManyToMany(mappedBy = "boards")
+    public List<User> users;
+
     public Board(String name, Integer team_id, String background) {
         this.name = name;
         this.team_id = team_id;
@@ -30,5 +33,15 @@ public class Board extends Model {
 
     public void setBackground(String background) {
         this.background = background;
+    }
+
+    @Override
+    public String toString() {
+        return "Board{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", team_id=" + team_id +
+                ", background='" + background + '\'' +
+                '}';
     }
 }

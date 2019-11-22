@@ -6,7 +6,9 @@ import converters.list.ListToListJson;
 import json.list.ListJson;
 import json.list.ListJsonPost;
 import json.list.ListJsonPut;
+import models.Board;
 import models.List;
+import repository.BoardFinder;
 import repository.ListFinder;
 import validator.ListValidator;
 
@@ -19,7 +21,8 @@ public class ListService {
 
     @Inject
     private ListToListJson listToListJson;
-
+    @Inject
+    private AuthService authService;
     @Inject
     private ListJsonPostToList listJsonPostToList;
 
@@ -43,8 +46,12 @@ public class ListService {
         return list.id;
     }
 
-    public boolean updateList(Integer listId, ListJsonPut listJsonPut){
+    public boolean updateList(Integer listId, ListJsonPut listJsonPut, Integer userId){
         if(!ListValidator.checkIfListExists(listId)){
+            return false;
+        }
+
+        if (authService.validateUserPermissionToList(listId, userId)){
             return false;
         }
 

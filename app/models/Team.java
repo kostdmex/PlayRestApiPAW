@@ -3,6 +3,7 @@ package models;
 import io.ebean.Model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Team extends Model {
@@ -15,4 +16,8 @@ public class Team extends Model {
     public String description;
     public String site;
     public String logo;
+
+    @ManyToMany(mappedBy = "boards")
+    public List<User> teams;
+
 }

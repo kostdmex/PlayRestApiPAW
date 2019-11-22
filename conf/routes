@@ -10,3 +10,7 @@ GET         /card/all/:id controllers.CardController.getCardsBtListId(id:Integer
 GET         /card/:id controllers.CardController.getCardById(id:Integer)
 POST        /card controllers.CardController.createCard
 PUT         /card/:id controllers.CardController.updateCard(id:Integer)
+GET         /board controllers.BoardController.findAll
+
+POST        /user controllers.UserController.createUser
+POST        /login controllers.AuthController.autorize

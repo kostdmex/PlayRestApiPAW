@@ -13,6 +13,7 @@ import validator.ListValidator;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,6 +24,8 @@ public class CardService {
     private CardToCardJson cardToCardJson;
     @Inject
     private CardJsonPostToCard cardJsonPostToCard;
+    @Inject
+    private AuthService authService;
 
     public List<CardJson> getCardsByListId(Integer listId) {
         List<Card> cards = CardFinder.findAllByListId(listId);
@@ -49,20 +52,25 @@ public class CardService {
         }
 
         Card card = cardJsonPostToCard.apply(cardJsonPost);
+        if(card.getAddDate() == null){
+            card.setAddDate(LocalDateTime.now());
+        }
 
         card.save();
 
         return card.getId();
     }
 
-    public boolean updateCard(Integer cardId, CardJsonPut cardJsonPut) {
+    public boolean updateCard(Integer cardId, CardJsonPut cardJsonPut, Integer userId) {
         if(!CardValidator.validateIdCrdExists(cardId)){
             return false;
         }
 
-        if(!CardValidator.validateCardPut(cardJsonPut)){
-            return false;
-        }
+//        if(!CardValidator.validateCardPut(cardJsonPut)){
+//            return false;
+//        }
+
+        authService.validateUserPermissionToCard(cardId, userId);
 
         Card cardToUpdate = CardFinder.findCardById(cardId);
 
