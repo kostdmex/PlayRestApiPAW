@@ -52,6 +52,15 @@ BEGIN
   EXECUTE stmt;
 END
 $$
+create table activity (
+  id                            integer auto_increment not null,
+  add_date                      datetime(6),
+  text_activity                 varchar(255),
+  card_id                       integer not null,
+  user_id                       integer not null,
+  constraint pk_activity primary key (id)
+);
+
 create table board (
   id                            integer auto_increment not null,
   name                          varchar(255),
@@ -113,6 +122,12 @@ create table user_team (
   constraint pk_user_team primary key (id)
 );
 
+create index ix_activity_card_id on activity (card_id);
+alter table activity add constraint fk_activity_card_id foreign key (card_id) references card (id) on delete restrict on update restrict;
+
+create index ix_activity_user_id on activity (user_id);
+alter table activity add constraint fk_activity_user_id foreign key (user_id) references user (id) on delete restrict on update restrict;
+
 create index ix_card_list_id on card (list_id);
 alter table card add constraint fk_card_list_id foreign key (list_id) references list (id) on delete restrict on update restrict;
 
@@ -122,11 +137,19 @@ alter table list add constraint fk_list_board_id foreign key (board_id) referenc
 
 # --- !Downs
 
+alter table activity drop foreign key fk_activity_card_id;
+drop index ix_activity_card_id on activity;
+
+alter table activity drop foreign key fk_activity_user_id;
+drop index ix_activity_user_id on activity;
+
 alter table card drop foreign key fk_card_list_id;
 drop index ix_card_list_id on card;
 
 alter table list drop foreign key fk_list_board_id;
 drop index ix_list_board_id on list;
+
+drop table if exists activity;
 
 drop table if exists board;
 

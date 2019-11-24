@@ -1,6 +1,5 @@
 package repository;
 
-import io.ebean.Ebean;
 import io.ebean.Finder;
 import models.Board;
 
