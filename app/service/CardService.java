@@ -70,7 +70,9 @@ public class CardService {
 //            return false;
 //        }
 
-        authService.validateUserPermissionToCard(cardId, userId);
+        if(authService.validateUserPermissionToCard(cardId, userId)){
+            return false;
+        }
 
         Card cardToUpdate = CardFinder.findCardById(cardId);
 

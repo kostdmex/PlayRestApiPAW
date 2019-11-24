@@ -28,6 +28,9 @@ public class Card extends Model {
     @JoinColumn(name = "list_id", nullable = false)
     public List list;
 
+    @OneToMany(mappedBy = "card")
+    public java.util.List<Activity> activities;
+
     @Override
     public String toString() {
         return "Card{" +

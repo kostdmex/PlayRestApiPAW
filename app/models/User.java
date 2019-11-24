@@ -27,6 +27,8 @@ public class User extends Model {
     @JoinTable(name = "user_team")
     public List<Team> teams;
 
+    @OneToMany(mappedBy = "user")
+    public List<Activity> activities;
 
     public Integer getId() {
         return id;

@@ -23,13 +23,18 @@ public class CardController extends Controller {
     private CardService cardService;
     @Inject
     private AuthService authService;
+    @Inject
+    private ActivityController activityController;
 
-    public Result getCardsBtListId(Integer listId){
+    public Result getCardsByListId(Integer listId){
         Result result = authService.validateRequest(request());
         if(result.status() == 403){
             return result;
         }
-        authService.validateUserPermissionToList(listId, authService.getUserIdFromToken(request()));
+
+        if(authService.validateUserPermissionToList(listId, authService.getUserIdFromToken(request()))){
+            return forbidden();
+        }
 
         List<CardJson> cardJsonList =  cardService.getCardsByListId(listId);
         if(cardJsonList == null){
