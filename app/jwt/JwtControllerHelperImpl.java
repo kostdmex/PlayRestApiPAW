@@ -6,6 +6,8 @@ import play.mvc.Http;
 import play.mvc.Result;
 
 import javax.inject.Inject;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -24,11 +26,12 @@ public class JwtControllerHelperImpl implements JwtControllerHelper {
 
     @Override
     public Result verify(Http.Request request, Function<F.Either<JwtValidator.Error, VerifiedJwt>, Result> f) {
-        System.out.println("Headers");
-		for(Header header : request.getHeaders()){
-			System.out.println(header);
-		}
-		System.out.println(request.getHeaders().get(HEADER_AUTHORIZATION));
+        Map<String, List<String>> headers = request.getHeaders().toMap();
+        headers.forEach((s, s1) -> {
+            System.out.println(s);
+            System.out.println(s1);
+        });
+
         Optional<String> authHeader =  request.getHeaders().get(HEADER_AUTHORIZATION);
 
         if (!authHeader.filter(ah -> ah.contains(BEARER)).isPresent()) {
