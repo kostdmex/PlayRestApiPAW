@@ -25,7 +25,9 @@ public class JwtControllerHelperImpl implements JwtControllerHelper {
     @Override
     public Result verify(Http.Request request, Function<F.Either<JwtValidator.Error, VerifiedJwt>, Result> f) {
         System.out.println("Headers");
-        request.getHeaders().forEach(System.out::println);
+		for(Header header : request.getHeaders()){
+			System.out.println(header);
+		}
 		System.out.println(request.getHeaders().get(HEADER_AUTHORIZATION));
         Optional<String> authHeader =  request.getHeaders().get(HEADER_AUTHORIZATION);
 
