@@ -30,4 +30,16 @@ public class BoardFinder {
     public static  Board findByListId(Integer listId){
         return FINDER.query().where().eq("lists.id", listId).findOne();
     }
+
+    public static List<Board> findByUseNameAndBoardName(String userName, String boardName){
+        return FINDER.query().where().eq("name", boardName).eq("isPublic", true).eq("users.login", userName).findList();
+    }
+
+    public static Boolean checkIfBoardIsPublic(Integer boardId){
+        Board board = FINDER.query().where().eq("id", boardId).findOne();
+        if(board == null){
+            return null;
+        }
+        return board.getIsPublic();
+    }
 }

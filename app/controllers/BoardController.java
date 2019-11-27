@@ -100,4 +100,13 @@ public class BoardController extends Controller {
         return created();
     }
 
+
+    public Result findByUserAndBoardName(String userName, String boardName){
+        List<BoardJson> list = boardService.findBoardsByUserNameAndBoardsName(userName, boardName);
+        if (list == null) {
+            return notFound();
+        }
+
+        return ok(Json.toJson(list));
+    }
 }

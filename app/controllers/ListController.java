@@ -27,13 +27,21 @@ public class ListController extends Controller {
 
 
     public Result findByBoardId(Integer boardId){
-        Result result = authService.validateRequest(request());
-        if(result.status() == 403){
-            return result;
+        Boolean isPublic = BoardFinder.checkIfBoardIsPublic(boardId);
+        if(isPublic == null){
+            return notFound();
         }
 
-        if(BoardFinder.findByUserIdAndBoardId(authService.getUserIdFromToken(request()), boardId) == null){
-            return forbidden();
+        if(!isPublic) {
+            Result result = authService.validateRequest(request());
+            if (result.status() == 403) {
+                return result;
+            }
+
+            if (BoardFinder.findByUserIdAndBoardId(authService.getUserIdFromToken(request()), boardId) == null) {
+                return forbidden();
+            }
+
         }
 
         List<ListJson> listJsons = listService.findByBoardId(boardId);

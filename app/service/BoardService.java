@@ -83,9 +83,21 @@ public class BoardService {
             boardToUpdate.setBackground(boardJsonPut.getBackground());
         }
 
+        if(boardJsonPut.getIsPublic() != null){
+            boardToUpdate.setPublic(boardJsonPut.getIsPublic());
+        }
+
         boardToUpdate.save();
 
         return true;
     }
 
+    public List<BoardJson> findBoardsByUserNameAndBoardsName(String userName, String boardName) {
+        List<Board> boards = BoardFinder.findByUseNameAndBoardName(userName, boardName);
+        if (boards.size() == 0) {
+            return null;
+        }
+
+        return boards.stream().map(boardToBoardJson).collect(Collectors.toList());
+    }
 }

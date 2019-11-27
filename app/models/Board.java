@@ -15,16 +15,24 @@ public class Board extends Model {
     public Integer team_id;
     public String background;
 
+    @Column(name = "isPublic")
+    private boolean isPublic;
+
     @OneToMany(mappedBy = "board")
     public List<models.List> lists;
 
     @ManyToMany(mappedBy = "boards")
     public List<User> users;
 
-    public Board(String name, Integer team_id, String background) {
+    public Board(String name, Integer team_id, String background, boolean isPublic) {
         this.name = name;
         this.team_id = team_id;
         this.background = background;
+        this.isPublic = isPublic;
+    }
+
+    public boolean getIsPublic() {
+        return isPublic;
     }
 
     public void setName(String name) {
@@ -35,6 +43,10 @@ public class Board extends Model {
         this.background = background;
     }
 
+    public void setPublic(boolean aPublic) {
+        isPublic = aPublic;
+    }
+
     @Override
     public String toString() {
         return "Board{" +
@@ -42,6 +54,7 @@ public class Board extends Model {
                 ", name='" + name + '\'' +
                 ", team_id=" + team_id +
                 ", background='" + background + '\'' +
+                ", isPublic=" + isPublic +
                 '}';
     }
 }

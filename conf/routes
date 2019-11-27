@@ -16,3 +16,5 @@ POST        /user controllers.UserController.createUser
 POST        /login controllers.AuthController.autorize
 POST        /activity controllers.ActivityController.createCardActivity
 GET         /activity/:id controllers.ActivityController.getActivitiesByCardId(id:Integer)
+
+GET         /board/:userName/:boardName controllers.BoardController.findByUserAndBoardName(userName:String, boardName:String)
