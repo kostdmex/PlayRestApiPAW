@@ -24,7 +24,7 @@ public class BoardToBoardJson implements Function<Board, BoardJson> {
 
         java.util.List<ListJson> listJsons = lists.stream().map(listToListJson::apply).collect(Collectors.toList());
 
-        return new BoardJson(board.id, board.name, board.team_id, board.background, listJsons);
+        return new BoardJson(board.id, board.name, board.team_id, board.background, board.getIsPublic(), listJsons);
     }
 
 }

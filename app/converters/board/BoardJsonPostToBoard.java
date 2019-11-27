@@ -11,6 +11,6 @@ public class BoardJsonPostToBoard implements Function<BoardJsonPost, Board> {
 
     @Override
     public Board apply(BoardJsonPost boardJsonPost) {
-        return new Board(boardJsonPost.name, boardJsonPost.team_id, boardJsonPost.background);
+        return new Board(boardJsonPost.name, boardJsonPost.team_id, boardJsonPost.background, boardJsonPost.getPublic());
     }
 }

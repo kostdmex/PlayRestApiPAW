@@ -106,3 +106,5 @@ create table task(
     is_done bool default false,
 	primary key (id),
       CONSTRAINT id_task_list foreign key (task_list_id) references task_list (id) ON UPDATE NO ACTION ON DELETE NO ACTION);
+
+  alter table board add column `isPublic` boolean not null default true;

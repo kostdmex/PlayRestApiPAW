@@ -66,6 +66,7 @@ create table board (
   name                          varchar(255),
   team_id                       integer,
   background                    varchar(255),
+  ispublic                      tinyint(1) default 0 not null,
   constraint pk_board primary key (id)
 );
 

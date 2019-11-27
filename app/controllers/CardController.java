@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import json.card.CardJson;
 import json.card.CardJsonPost;
 import json.card.CardJsonPut;
+import models.Board;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -23,19 +24,27 @@ public class CardController extends Controller {
     private CardService cardService;
     @Inject
     private AuthService authService;
-    @Inject
-    private ActivityController activityController;
 
     public Result getCardsByListId(Integer listId){
-        Result result = authService.validateRequest(request());
-        if(result.status() == 403){
-            return result;
+        Board board = BoardFinder.findByListId(listId);
+        if(board == null){
+            return notFound();
+        }
+        Boolean isPublic = BoardFinder.checkIfBoardIsPublic(board.id);
+        if(isPublic == null){
+            return notFound();
         }
 
-        if(authService.validateUserPermissionToList(listId, authService.getUserIdFromToken(request()))){
-            return forbidden();
-        }
+        if(!isPublic) {
+            Result result = authService.validateRequest(request());
+            if (result.status() == 403) {
+                return result;
+            }
 
+            if (authService.validateUserPermissionToList(listId, authService.getUserIdFromToken(request()))) {
+                return forbidden();
+            }
+        }
         List<CardJson> cardJsonList =  cardService.getCardsByListId(listId);
         if(cardJsonList == null){
             return notFound();
@@ -44,13 +53,21 @@ public class CardController extends Controller {
     }
 
     public Result getCardById(Integer cardId){
-        Result result = authService.validateRequest(request());
-        if(result.status() == 403){
-            return result;
+        Board board = BoardFinder.findByListId(ListFinder.findByCardId(cardId).getId());
+        Boolean isPublic = BoardFinder.checkIfBoardIsPublic(board.id);
+        if(isPublic == null){
+            return notFound();
         }
 
-        authService.validateUserPermissionToCard(cardId, authService.getUserIdFromToken(request()));
+        if(!isPublic) {
+            Result result = authService.validateRequest(request());
+            if (result.status() == 403) {
+                return result;
+            }
 
+            authService.validateUserPermissionToCard(cardId, authService.getUserIdFromToken(request()));
+
+        }
         CardJson cardJson = cardService.getCardById(cardId);
         if(cardJson == null){
             return notFound();
