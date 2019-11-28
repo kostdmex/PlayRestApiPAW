@@ -31,6 +31,7 @@ public class AuthController extends Controller {
 
     public Result autorize() throws UnsupportedEncodingException {
         JsonNode body = request().body().asJson();
+        System.out.println(request().body().asJson());
         if (body == null) {
             Logger.error("json body is null");
             return forbidden();
