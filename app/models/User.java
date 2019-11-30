@@ -30,6 +30,9 @@ public class User extends Model {
     @OneToMany(mappedBy = "user")
     public List<Activity> activities;
 
+    @OneToMany(mappedBy = "user")
+    public List<Comment> comments;
+
     public Integer getId() {
         return id;
     }

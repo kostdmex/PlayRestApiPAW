@@ -108,3 +108,5 @@ create table task(
       CONSTRAINT id_task_list foreign key (task_list_id) references task_list (id) ON UPDATE NO ACTION ON DELETE NO ACTION);
 
   alter table board add column `isPublic` boolean not null default true;
+  alter table list add unique(number_on_board, board_id);
+  alter table comment add column content longtext;
