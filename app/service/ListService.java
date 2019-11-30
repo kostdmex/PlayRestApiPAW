@@ -14,6 +14,7 @@ import validator.ListValidator;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import java.util.Comparator;
 import java.util.stream.Collectors;
 
 @Singleton
@@ -33,7 +34,7 @@ public class ListService {
             return null;
         }
 
-        return listList.stream().map(listToListJson).collect(Collectors.toList());
+        return listList.stream().map(listToListJson).sorted(Comparator.comparingInt(ListJson::getNumberOnBoard)).collect(Collectors.toList());
     }
 
     public Integer createList(ListJsonPost listJson){

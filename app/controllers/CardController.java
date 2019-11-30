@@ -64,8 +64,9 @@ public class CardController extends Controller {
             if (result.status() == 403) {
                 return result;
             }
-
-            authService.validateUserPermissionToCard(cardId, authService.getUserIdFromToken(request()));
+            if(authService.validateUserPermissionToCard(cardId, authService.getUserIdFromToken(request()))){
+                return forbidden();
+            }
 
         }
         CardJson cardJson = cardService.getCardById(cardId);

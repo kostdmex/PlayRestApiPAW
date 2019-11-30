@@ -11,10 +11,10 @@ GET         /card/:id controllers.CardController.getCardById(id:Integer)
 POST        /card controllers.CardController.createCard
 PUT         /card/:id controllers.CardController.updateCard(id:Integer)
 GET         /board controllers.BoardController.findAll
-
 POST        /user controllers.UserController.createUser
 POST        /login controllers.AuthController.autorize
 POST        /activity controllers.ActivityController.createCardActivity
 GET         /activity/:id controllers.ActivityController.getActivitiesByCardId(id:Integer)
-
 GET         /board/:userName/:boardName controllers.BoardController.findByUserAndBoardName(userName:String, boardName:String)
+POST        /comment/:id controllers.CommentController.addCommentToCard(id:Integer)
+GET         /comment/:id controllers.CommentController.getCommentsByCardId(id:Integer)

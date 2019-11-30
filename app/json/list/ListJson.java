@@ -17,4 +17,20 @@ public class ListJson {
         this.boardId = boardId;
         this.numberOnBoard = numberOnBoard;
     }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Integer getBoardId() {
+        return boardId;
+    }
+
+    public Integer getNumberOnBoard() {
+        return numberOnBoard;
+    }
 }

@@ -31,6 +31,9 @@ public class Card extends Model {
     @OneToMany(mappedBy = "card")
     public java.util.List<Activity> activities;
 
+    @OneToMany(mappedBy = "card")
+    public java.util.List<Comment> comments;
+
     @Override
     public String toString() {
         return "Card{" +
