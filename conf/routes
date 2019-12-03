@@ -18,3 +18,4 @@ GET         /activity/:id controllers.ActivityController.getActivitiesByCardId(i
 GET         /board/:userName/:boardName controllers.BoardController.findByUserAndBoardName(userName:String, boardName:String)
 POST        /comment/:id controllers.CommentController.addCommentToCard(id:Integer)
 GET         /comment/:id controllers.CommentController.getCommentsByCardId(id:Integer)
+PUT         /list/order/:id controllers.ListController.setListOrder(id:Integer)

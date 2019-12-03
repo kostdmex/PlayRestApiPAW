@@ -110,3 +110,4 @@ create table task(
   alter table board add column `isPublic` boolean not null default true;
   alter table list add unique(number_on_board, board_id);
   alter table comment add column content longtext;
+  alter table list modify number_on_board int(10) unsigned;
