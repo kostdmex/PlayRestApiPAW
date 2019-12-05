@@ -8,10 +8,8 @@ import json.list.ListJson;
 import json.list.ListJsonPost;
 import json.list.ListJsonPut;
 import json.list.ListJsonPutOrder;
-import models.Board;
 import models.List;
 import play.db.ebean.Transactional;
-import repository.BoardFinder;
 import repository.ListFinder;
 import validator.ListValidator;
 
@@ -19,10 +17,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Set;
 import java.util.stream.Collectors;
-
-import static java.util.stream.Collectors.toSet;
 
 @Singleton
 public class ListService {
@@ -90,7 +85,7 @@ public class ListService {
         }
 
         for (ListJsonPutOrder list : lists) {
-            if(listsOnBoard.stream().filter(li -> li.getId().equals(list.getListId())).findAny().isEmpty()){
+            if(listsOnBoard.stream().noneMatch(li -> li.getId().equals(list.getListId()))){
                 return false;
             }
         }

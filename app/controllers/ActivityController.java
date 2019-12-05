@@ -16,7 +16,6 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.List;
 
-@Singleton
 public class ActivityController extends Controller {
 
     @Inject

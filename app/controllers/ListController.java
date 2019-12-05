@@ -20,7 +20,6 @@ import service.ListService;
 import java.io.IOException;
 import java.util.List;
 
-@Singleton
 public class ListController extends Controller {
 
     @Inject

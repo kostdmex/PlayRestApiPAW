@@ -61,6 +61,15 @@ create table activity (
   constraint pk_activity primary key (id)
 );
 
+create table attachment (
+  id                            integer auto_increment not null,
+  card_id                       integer,
+  comment_id                    integer,
+  attachment                    varchar(255),
+  name                          varchar(255),
+  constraint pk_attachment primary key (id)
+);
+
 create table board (
   id                            integer auto_increment not null,
   name                          varchar(255),
@@ -172,6 +181,8 @@ alter table list drop foreign key fk_list_board_id;
 drop index ix_list_board_id on list;
 
 drop table if exists activity;
+
+drop table if exists attachment;
 
 drop table if exists board;
 

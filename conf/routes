@@ -19,3 +19,7 @@ GET         /board/:userName/:boardName controllers.BoardController.findByUserAn
 POST        /comment/:id controllers.CommentController.addCommentToCard(id:Integer)
 GET         /comment/:id controllers.CommentController.getCommentsByCardId(id:Integer)
 PUT         /list/order/:id controllers.ListController.setListOrder(id:Integer)
+POST        /attachment/card/:id controllers.AttachmentController.addAttachmentToCard(id:Integer)
+GET         /attachment/card/:id controllers.AttachmentController.getAttachmentsByCardId(id:Integer)
+GET         /attachment/:id      controllers.AttachmentController.findByAttachmentId(id:Integer)
+DELETE      /attachment/:id      controllers.AttachmentController.deleteAttachmentById(id:Integer)

@@ -111,3 +111,15 @@ create table task(
   alter table list add unique(number_on_board, board_id);
   alter table comment add column content longtext;
   alter table list modify number_on_board int(10) unsigned;
+  alter table comment drop column attachment;
+
+  create table attachment(
+    id int(10) unsigned not null auto_increment,
+    card_id int(10) unsigned not null,
+    card_id int(10) unsigned,
+    attachment longblob not null,
+    primary key (id),
+    CONSTRAINT id_card_attachment foreign key (card_id) references card (id) ON UPDATE NO ACTION ON DELETE NO ACTION);
+  )
+
+alter table attachment add column name text not null;
