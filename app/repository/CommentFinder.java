@@ -14,4 +14,8 @@ public class CommentFinder {
     public static List<Comment> findByCardId(Integer cardId){
         return FINDER.query().where().eq("card_Id", cardId).findList();
     }
+
+    public static Comment findById(Integer commentId){
+        return FINDER.query().where().eq("id", commentId).findOne();
+    }
 }

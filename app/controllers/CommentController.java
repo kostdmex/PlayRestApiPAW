@@ -71,4 +71,17 @@ public class CommentController extends Controller {
 
         return ok(Json.toJson(commentJsons));
     }
+
+    public Result getCommentById(Integer commentId){
+        Result result = authService.validateRequest(request());
+        if (result.status() == 403) {
+            return result;
+        }
+
+        CommentJson commentJson = commentService.getCommentById(commentId);
+        if(commentJson == null){
+            return notFound();
+        }
+        return ok(Json.toJson(commentJson));
+    }
 }

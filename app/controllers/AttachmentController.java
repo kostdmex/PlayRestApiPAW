@@ -1,11 +1,13 @@
 package controllers;
 
-import json.attachment.AttachmentJson;
+import json.attachment.CardAttachmentJson;
 import json.attachment.CardAttachment;
 import json.attachment.CardAttachmentGet;
+import models.Comment;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
+import repository.CommentFinder;
 import service.AttachmentService;
 import service.AuthService;
 
@@ -59,7 +61,7 @@ public class AttachmentController extends Controller {
             return result;
         }
 
-        AttachmentJson attachmentJson = attachmentService.getAttachmentById(attachmentId);
+        CardAttachmentJson attachmentJson = attachmentService.getAttachmentById(attachmentId);
         if(attachmentJson == null){
             return notFound();
         }
@@ -74,5 +76,26 @@ public class AttachmentController extends Controller {
         }
         attachmentService.deleteAttachmentById(attachmentId);
         return ok();
+    }
+
+    public Result addAttachmentToComment(Integer commentId){
+        Comment comment = CommentFinder.findById(commentId);
+        if(comment == null){
+            return notFound();
+        }
+        Result result = authService.validateRequest(request());
+        if (result.status() == 403) {
+            return result;
+        }
+        if(authService.validateUserPermissionToCard(comment.getCard().getId(), authService.getUserIdFromToken(request()))){
+            return forbidden();
+        }
+
+        Integer attachmentId = attachmentService.addAttachmentToComment(commentId, Json.fromJson(request().body().asJson(), CardAttachment.class));
+        if(attachmentId == -1){
+            return badRequest();
+        }
+
+        return created().withHeader("Location", String.valueOf(attachmentId));
     }
 }

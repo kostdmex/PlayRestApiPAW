@@ -2,12 +2,14 @@ package service;
 
 import converters.attachment.AttachmentToAttachmentJson;
 import converters.attachment.AttachmentToCardAttachmentGet;
-import json.attachment.AttachmentJson;
+import json.attachment.CardAttachmentJson;
 import json.attachment.CardAttachment;
 import json.attachment.CardAttachmentGet;
 import models.Attachment;
 import repository.AttachmentFinder;
 import repository.CardFinder;
+import repository.CommentFinder;
+import validator.AttachmentPostValidator;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -22,15 +24,15 @@ public class AttachmentService {
     @Inject
     private AttachmentToAttachmentJson attachmentToAttachmentJson;
 
-    public Integer addAttachmentToCard(Integer cardId, CardAttachment attachmentPost){
-        if(CardFinder.findCardById(cardId) == null || attachmentPost.getAttachment() == null || attachmentPost.getName() == null){
+    public Integer addAttachmentToCard(Integer cardId, CardAttachment cardAttachment){
+        if(CardFinder.findCardById(cardId) == null || !AttachmentPostValidator.validateAttachmentPost(cardAttachment)){
             return -1;
         }
 
         Attachment attachment = new Attachment();
         attachment.setCard_id(cardId);
-        attachment.setName(attachmentPost.getName());
-        attachment.setAttachment(attachmentPost.getAttachment());
+        attachment.setName(cardAttachment.getName());
+        attachment.setAttachment(cardAttachment.getAttachment());
         attachment.save();
         return attachment.getId();
     }
@@ -46,7 +48,7 @@ public class AttachmentService {
                 .collect(Collectors.toList());
     }
 
-    public AttachmentJson getAttachmentById(Integer attachmentId){
+    public CardAttachmentJson getAttachmentById(Integer attachmentId){
         if(AttachmentFinder.findById(attachmentId) == null){
             return null;
         }
@@ -59,5 +61,20 @@ public class AttachmentService {
         if(attachment != null){
             attachment.deletePermanent();
         }
+    }
+
+    public Integer addAttachmentToComment(Integer commentId, CardAttachment cardAttachment) {
+        if(!AttachmentPostValidator.validateAttachmentPost(cardAttachment)){
+            return -1;
+        }
+
+        Attachment attachment = new Attachment();
+        attachment.setName(cardAttachment.getName());
+        attachment.setAttachment(cardAttachment.getAttachment());
+        attachment.setComment_id(commentId);
+        attachment.setCard_id(CommentFinder.findById(commentId).getCard().getId());
+        attachment.save();
+
+        return attachment.getId();
     }
 }

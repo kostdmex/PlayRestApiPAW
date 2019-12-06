@@ -19,4 +19,8 @@ public class AttachmentFinder {
         return FINDER.query().where().eq("id", attachmentId).findOne();
     }
 
+    public static List<Attachment> findByCommentId(Integer commentId){
+        return FINDER.query().where().eq("comment_id", commentId).findList();
+    }
+
 }
