@@ -16,7 +16,6 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.List;
 
-@Singleton
 public class CommentController extends Controller {
 
     @Inject
@@ -71,5 +70,18 @@ public class CommentController extends Controller {
         }
 
         return ok(Json.toJson(commentJsons));
+    }
+
+    public Result getCommentById(Integer commentId){
+        Result result = authService.validateRequest(request());
+        if (result.status() == 403) {
+            return result;
+        }
+
+        CommentJson commentJson = commentService.getCommentById(commentId);
+        if(commentJson == null){
+            return notFound();
+        }
+        return ok(Json.toJson(commentJson));
     }
 }

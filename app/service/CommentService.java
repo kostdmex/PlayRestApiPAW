@@ -40,4 +40,13 @@ public class CommentService {
 
         return comments.stream().map(commentToCommentJson).collect(Collectors.toList());
     }
+
+    public CommentJson getCommentById(Integer commentId) {
+        Comment comment = CommentFinder.findById(commentId);
+        if(comment == null){
+            return null;
+        }
+
+        return commentToCommentJson.apply(comment);
+    }
 }

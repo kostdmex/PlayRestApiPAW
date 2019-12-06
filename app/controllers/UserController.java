@@ -9,7 +9,6 @@ import service.UserService;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-@Singleton
 public class UserController extends Controller {
 
     @Inject
