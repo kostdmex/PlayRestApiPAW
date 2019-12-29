@@ -1,6 +1,7 @@
 package models;
 
 import io.ebean.Model;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -34,6 +35,10 @@ public class Card extends Model {
     @OneToMany(mappedBy = "card")
     public java.util.List<Comment> comments;
 
+    @OneToMany(mappedBy = "card")
+    public java.util.List<TaskList> taskList;
+
+
     @Override
     public String toString() {
         return "Card{" +
@@ -45,6 +50,30 @@ public class Card extends Model {
                 ", addDate=" + addDate +
                 ", list=" + list.getId() +
                 '}';
+    }
+
+    public java.util.List<Activity> getActivities() {
+        return activities;
+    }
+
+    public void setActivities(java.util.List<Activity> activities) {
+        this.activities = activities;
+    }
+
+    public java.util.List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(java.util.List<Comment> comments) {
+        this.comments = comments;
+    }
+
+    public java.util.List<TaskList> getTaskList() {
+        return taskList;
+    }
+
+    public void setTaskList(java.util.List<TaskList> taskList) {
+        this.taskList = taskList;
     }
 
     public Integer getId() {
