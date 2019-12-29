@@ -107,6 +107,21 @@ create table list (
   constraint pk_list primary key (id)
 );
 
+create table task (
+  id                            integer auto_increment not null,
+  name                          varchar(255),
+  is_done                       tinyint(1) default 0 not null,
+  task_list_id                  integer not null,
+  constraint pk_task primary key (id)
+);
+
+create table task_list (
+  id                            integer auto_increment not null,
+  name                          varchar(255),
+  card_id                       integer not null,
+  constraint pk_task_list primary key (id)
+);
+
 create table team (
   id                            integer auto_increment not null,
   name                          varchar(255),
@@ -159,6 +174,12 @@ alter table comment add constraint fk_comment_card_id foreign key (card_id) refe
 create index ix_list_board_id on list (board_id);
 alter table list add constraint fk_list_board_id foreign key (board_id) references board (id) on delete restrict on update restrict;
 
+create index ix_task_task_list_id on task (task_list_id);
+alter table task add constraint fk_task_task_list_id foreign key (task_list_id) references task_list (id) on delete restrict on update restrict;
+
+create index ix_task_list_card_id on task_list (card_id);
+alter table task_list add constraint fk_task_list_card_id foreign key (card_id) references card (id) on delete restrict on update restrict;
+
 
 # --- !Downs
 
@@ -180,6 +201,12 @@ drop index ix_comment_card_id on comment;
 alter table list drop foreign key fk_list_board_id;
 drop index ix_list_board_id on list;
 
+alter table task drop foreign key fk_task_task_list_id;
+drop index ix_task_task_list_id on task;
+
+alter table task_list drop foreign key fk_task_list_card_id;
+drop index ix_task_list_card_id on task_list;
+
 drop table if exists activity;
 
 drop table if exists attachment;
@@ -191,6 +218,10 @@ drop table if exists card;
 drop table if exists comment;
 
 drop table if exists list;
+
+drop table if exists task;
+
+drop table if exists task_list;
 
 drop table if exists team;
 
