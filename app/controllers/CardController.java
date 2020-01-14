@@ -1,9 +1,12 @@
 package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.TypeFactory;
 import json.card.CardJson;
 import json.card.CardJsonPost;
 import json.card.CardJsonPut;
+import json.card.CardJsonPutOrder;
 import models.Board;
 import play.libs.Json;
 import play.mvc.Controller;
@@ -15,6 +18,7 @@ import service.CardService;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import java.io.IOException;
 import java.util.List;
 
 public class CardController extends Controller {
@@ -110,5 +114,39 @@ public class CardController extends Controller {
         }
 
         return created();
+    }
+
+    public Result setCardOrder(Integer listId) throws IOException {
+        Board board = BoardFinder.findByListId(listId);
+        if(board == null){
+            return notFound();
+        }
+        Boolean isPublic = BoardFinder.checkIfBoardIsPublic(board.id);
+        if(isPublic == null){
+            return notFound();
+        }
+
+        if(!isPublic) {
+            Result result = authService.validateRequest(request());
+            if (result.status() == 403) {
+                return result;
+            }
+
+            if (authService.validateUserPermissionToList(listId, authService.getUserIdFromToken(request()))) {
+                return forbidden();
+            }
+        }
+
+        List<CardJsonPutOrder> cardJsonPutOrders = new ObjectMapper().readValue(request().body().asJson().toString()
+                , TypeFactory.defaultInstance().constructCollectionType(List.class,
+                        CardJsonPutOrder.class));
+
+        boolean success = cardService.setCardOrder(listId, cardJsonPutOrders);
+
+        if(!success){
+            return badRequest();
+        }
+
+        return ok();
     }
 }
