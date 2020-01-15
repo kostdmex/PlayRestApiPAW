@@ -40,6 +40,7 @@ public class AuthController extends Controller {
         if (body.hasNonNull("login") && body.hasNonNull("password")) {
             ObjectNode result = Json.newObject();
             result.put("access_token", getSignedToken(UserFinder.findByLoginAndPassword(body.get("login").asText(), body.get("password").asText())));
+            result.put("userId", UserFinder.findByLoginAndPassword(body.get("login").asText(), body.get("password").asText()).getId());
 
 
 
