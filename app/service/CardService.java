@@ -55,7 +55,10 @@ public class CardService {
         if (!CardValidator.validateCardPost(cardJsonPost)) {
             return null;
         }
+		
         List<CardJson> cardsOnList = getCardsByListId(cardJsonPost.getListId());
+		
+		if(!cardsOnList.isEmpty()){
         boolean isNumberTaken = false;
         for (CardJson cardJson : cardsOnList) {
             if(cardJson.getNumberOnList() == cardJsonPost.getNumberOnList())
@@ -65,7 +68,7 @@ public class CardService {
         if(isNumberTaken){
             cardJsonPost.setNumberOnList(cardsOnList.get(cardsOnList.size() - 1).getNumberOnList() + 1);
         }
-
+		}
         Card card = cardJsonPostToCard.apply(cardJsonPost);
         if(card.getAddDate() == null){
             card.setAddDate(LocalDateTime.now());
