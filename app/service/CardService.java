@@ -58,6 +58,7 @@ public class CardService {
 		
         List<CardJson> cardsOnList = getCardsByListId(cardJsonPost.getListId());
 		
+		if(!cardsOnList == null){
 		if(!cardsOnList.isEmpty()){
         boolean isNumberTaken = false;
         for (CardJson cardJson : cardsOnList) {
@@ -68,6 +69,7 @@ public class CardService {
         if(isNumberTaken){
             cardJsonPost.setNumberOnList(cardsOnList.get(cardsOnList.size() - 1).getNumberOnList() + 1);
         }
+		}
 		}
         Card card = cardJsonPostToCard.apply(cardJsonPost);
         if(card.getAddDate() == null){
