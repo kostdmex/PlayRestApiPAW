@@ -58,7 +58,7 @@ public class CardService {
 		
         List<CardJson> cardsOnList = getCardsByListId(cardJsonPost.getListId());
 		
-		if(!cardsOnList == null){
+		if(cardsOnList != null){
 		if(!cardsOnList.isEmpty()){
         boolean isNumberTaken = false;
         for (CardJson cardJson : cardsOnList) {
